@@ -1,96 +1,25 @@
-import { cadastrarCliente, NovoCliente } from "./cadastro"
+import { cadastrarCliente, buscarEnderecoNoViaCep } from './cadastro'
 
-type EnderecoMock = {
-  cep: string
-  logradouro: string
-  bairro: string
-  localidade: string
-  uf: string
-}
+describe('cadastrarCliente', () => {
+  it('deve lançar erro quando o CEP tem formato inválido', async () => {})
 
-type RejectMock = {
-    message: string
-}
+  it('deve aceitar CEP válido com hífen', async () => {})
 
+  it('deve aceitar CEP válido sem hífen', async () => {})
 
-function responseFactory(body: unknown, { ok =  true, status = 200} = {}) {
+  it('deve lançar erro quando o endereço não é encontrado', async () => {})
 
-    return {
-        ok,
-        status,
-        json: async () => body
-    } as unknown as Response
-}
+  it('deve retornar cliente com nome e endereço quando o cadastro é bem-sucedido', async () => {})
 
+  it('deve lançar erro quando a busca de endereço falha com exceção', async () => {})
 
-function fetchMocked(reponse: Response) {
-    const fetchMock = vi.fn(async => reponse)
-    vi.stubGlobal('fetch',fetchMock)
-}
+  it('deve remover o hífen do CEP antes de chamar a função de busca', async () => {})
+})
 
+describe('buscarEnderecoNoViaCep', () => {
+  it('deve retornar o endereço quando o ViaCEP responde com sucesso', async () => {})
 
+  it('deve retornar null quando o ViaCEP indica que o CEP não existe', async () => {})
 
-
-describe('function -> cadastrarCliente', () => {
-
-    afterEach(() => {
-        vi.unstubAllGlobals()
-        vi.restoreAllMocks()
-    })
-
-    it('deve retornar endereço valido', async () => {
-
-        // Arrange
-        const responseMock = responseFactory({
-            cep: '11111-221',
-            logradouro: 'Rua da paz',
-            bairro: 'Bairro de cima',
-            localidade: 'Porto Alegre',
-            uf: 'RS'
-        })
-        fetchMocked(responseMock)
-    
-      
-
-        const cliente: NovoCliente = {
-            cep: '17206438',
-            nome: 'Bruno'
-        }
-
-
-        // Act
-        const result = await cadastrarCliente(cliente)
-      
-
-        // Assert
-        expect(result).toStrictEqual({
-            nome: 'Bruno',
-            endereco: {
-            cep: '11111221',
-            logradouro: 'Rua da paz',
-            bairro: 'Bairro de cima',
-            cidade: 'Porto Alegre',
-            uf: 'RS'
-        }
-        })
-    })
-
-    it.only('deve retornar erro da API', async () => {
-        //Arrange
-         const responseMock = responseFactory({
-            cep: '11111-221',
-            logradouro: 'Rua da paz',
-            bairro: 'Bairro de cima',
-            localidade: 'Porto Alegre',
-            uf: 'RS'
-        }, {ok: false, status: 500})
-        fetchMocked(responseMock)
-    
-        const cliente = {
-            nome: 'John',
-            cep: '11111221'
-        };
-
-       
-    })
+  it('deve lançar erro quando o ViaCEP responde com status de erro HTTP', async () => {})
 })

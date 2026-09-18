@@ -1,4 +1,4 @@
-import { cadastrarCliente } from './cadastro'
+import { cadastrarCliente, buscarEnderecoNoViaCep } from './cadastro'
 
 const enderecoFake = {
   cep: '12345678',
@@ -49,9 +49,26 @@ describe('cadastrarCliente', () => {
 })
 
 describe('buscarEnderecoNoViaCep', () => {
-  it('deve retornar o endereço quando o ViaCEP responde com sucesso', async () => {})
+  it('deve retornar o endereço quando o ViaCEP responde com sucesso', async () => {
+    const corpo = { cep: '12345-678', logradouro: 'Rua das Flores', bairro: 'Centro', localidade: 'São Paulo', uf: 'SP' }
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => corpo }))
 
-  it('deve retornar null quando o ViaCEP indica que o CEP não existe', async () => {})
+    const resultado = await buscarEnderecoNoViaCep('12345678')
 
-  it('deve lançar erro quando o ViaCEP responde com status de erro HTTP', async () => {})
+    expect(resultado).toEqual({ cep: '12345678', logradouro: 'Rua das Flores', bairro: 'Centro', cidade: 'São Paulo', uf: 'SP' })
+  })
+
+  it('deve retornar null quando o ViaCEP indica que o CEP não existe', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ erro: true }) }))
+
+    const resultado = await buscarEnderecoNoViaCep('00000000')
+
+    expect(resultado).toBeNull()
+  })
+
+  it('deve lançar erro quando o ViaCEP responde com status de erro HTTP', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 500 }))
+
+    await expect(buscarEnderecoNoViaCep('12345678')).rejects.toThrow('ViaCEP respondeu com status 500')
+  })
 })

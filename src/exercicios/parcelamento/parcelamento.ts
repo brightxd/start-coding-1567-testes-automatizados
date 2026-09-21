@@ -7,6 +7,5 @@ export function calcularParcelamento(
   valorCompra: number,
   numeroParcelas: number
 ): ResultadoParcelamento {
-  // TODO: implementar
-  throw new Error('not implemented')
+  return { valorParcela: valorCompra, totalParcelas: numeroParcelas }
 }

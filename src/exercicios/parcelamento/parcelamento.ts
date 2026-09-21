@@ -7,5 +7,5 @@ export function calcularParcelamento(
   valorCompra: number,
   numeroParcelas: number
 ): ResultadoParcelamento {
-  return { valorParcela: valorCompra, totalParcelas: numeroParcelas }
+  return { valorParcela: valorCompra / numeroParcelas, totalParcelas: numeroParcelas }
 }

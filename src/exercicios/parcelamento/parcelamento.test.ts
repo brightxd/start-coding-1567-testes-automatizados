@@ -9,5 +9,12 @@ describe('calcularParcelamento', () => {
       expect(resultado.valorParcela).toBe(1000)
       expect(resultado.totalParcelas).toBe(1)
     })
+
+    it('divide o valor sem juros quando for 4x', () => {
+      const resultado = calcularParcelamento(1000, 4)
+
+      expect(resultado.valorParcela).toBe(250)
+      expect(resultado.totalParcelas).toBe(4)
+    })
   })
 })

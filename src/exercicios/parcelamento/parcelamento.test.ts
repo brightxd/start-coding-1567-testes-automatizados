@@ -39,5 +39,18 @@ describe('calcularParcelamento', () => {
       expect(resultado.valorParcela).toBe(84.62)
       expect(resultado.totalParcelas).toBe(13)
     })
+
+    it.each([
+      { parcelas: 4,  esperado: 250    },
+      { parcelas: 5,  esperado: 210    },
+      { parcelas: 8,  esperado: 131.25 },
+      { parcelas: 9,  esperado: 120    },
+      { parcelas: 12, esperado: 90     },
+      { parcelas: 13, esperado: 84.62  },
+    ])('aplica a faixa correta no limite de $parcelas parcelas', ({ parcelas, esperado }) => {
+      const resultado = calcularParcelamento(1000, parcelas)
+
+      expect(resultado.valorParcela).toBe(esperado)
+    })
   })
 })

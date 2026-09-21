@@ -53,4 +53,13 @@ describe('calcularParcelamento', () => {
       expect(resultado.valorParcela).toBe(esperado)
     })
   })
+
+  describe('arredondamento', () => {
+    it('arredonda o valor da parcela para 2 casas decimais', () => {
+      const resultado = calcularParcelamento(100, 3)
+
+      expect(resultado.valorParcela).toBe(33.33)
+      expect(resultado.totalParcelas).toBe(3)
+    })
+  })
 })

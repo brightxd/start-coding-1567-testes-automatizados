@@ -25,5 +25,12 @@ describe('calcularParcelamento', () => {
       expect(resultado.valorParcela).toBe(210)
       expect(resultado.totalParcelas).toBe(5)
     })
+
+    it('aplica 8% sobre o total quando for de 9x a 12x', () => {
+      const resultado = calcularParcelamento(1000, 9)
+
+      expect(resultado.valorParcela).toBe(120)
+      expect(resultado.totalParcelas).toBe(9)
+    })
   })
 })

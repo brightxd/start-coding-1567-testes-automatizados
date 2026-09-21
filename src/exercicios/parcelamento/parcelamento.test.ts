@@ -17,4 +17,13 @@ describe('calcularParcelamento', () => {
       expect(resultado.totalParcelas).toBe(4)
     })
   })
+
+  describe('com juros', () => {
+    it('aplica 5% sobre o total quando for de 5x a 8x', () => {
+      const resultado = calcularParcelamento(1000, 5)
+
+      expect(resultado.valorParcela).toBe(210)
+      expect(resultado.totalParcelas).toBe(5)
+    })
+  })
 })
